@@ -115,7 +115,7 @@ public class Main {
                     .describedAs("module-dir1,module-dir2,...");
 
     private static final OptionSpec<String> NAME_OPT =
-            OPT_PARSER.acceptsAll(asList("n", "name"), "The name of the final jar sans the -swarm.jar suffix (default: <source name>)")
+            OPT_PARSER.acceptsAll(asList("n", "name"), "The name of the final jar sans the -thorntail.jar suffix (default: <source name>)")
                     .withRequiredArg()
                     .ofType(String.class)
                     .describedAs("jar-name");
@@ -300,7 +300,7 @@ public class Main {
                     switch (parts.length) {
                         case 1:
                             final FractionDescriptor desc = FractionList.get()
-                                    .getFractionDescriptor("org.wildfly.swarm", parts[0]);
+                                    .getFractionDescriptor("io.thorntail", parts[0]);
                             if (desc != null) {
 
                                 return desc;
@@ -311,7 +311,7 @@ public class Main {
                             }
                         case 2:
 
-                            return new FractionDescriptor("org.wildfly.swarm", parts[0], parts[1]);
+                            return new FractionDescriptor("io.thorntail", parts[0], parts[1]);
                         case 3:
 
                             return new FractionDescriptor(parts[0], parts[1], parts[2]);

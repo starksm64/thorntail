@@ -48,7 +48,7 @@ public class KeycloakArquillianTest {
         deployment.addResource(SecuredResource.class);
         deployment.addAsResource("wildfly-swarm-keycloak-example-realm.json");
         deployment.addAsResource("keycloak.json");
-        deployment.addAsResource("project-defaults.yml");
+        deployment.addAsResource("project-default-kc-json.yml", "project-defaults.yml");
         return deployment;
     }
 
@@ -59,8 +59,7 @@ public class KeycloakArquillianTest {
         System.setProperty("keycloak.migration.provider", "singleFile");
         System.setProperty("keycloak.migration.action", "import");
         
-        URL keyCloakJsonUrl = KeycloakArquillianTest.class.getResource("/keycloak.json");
-        return new Swarm().withProperty("swarm.keycloak.json.path", keyCloakJsonUrl.toURI().toString());
+        return new Swarm();
     }
 
     @Test

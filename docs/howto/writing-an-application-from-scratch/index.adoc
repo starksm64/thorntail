@@ -2,7 +2,7 @@
 [id='writing-an-application-from-scratch_{context}']
 = Creating an application from scratch
 
-Creating a simple WildFly Swarm{ndash}based application with a REST endpoint from scratch.
+Creating a simple {Thorntail}{ndash}based application with a REST endpoint from scratch.
 
 [discrete]
 == Prerequisites
@@ -30,8 +30,12 @@ For more information, see https://git-scm.com/docs/gittutorial[Git tutorial].
 +
 [source,xml,options="nowrap",subs="attributes+"]
 ----
-ifndef::product[include::src/main/resources/pom.xml[]]
-ifdef::product[include::src/main/resources/pom-product.xml[]]
+ifndef::product[]
+include::src/main/resources/pom.xml[]
+endif::[]
+ifdef::product[]
+include::src/main/resources/pom-product.xml[]
+endif::[]
 ----
 
 . Create a directory structure for your application:
@@ -60,7 +64,7 @@ include::src/main/resources/RestApplication.java[]
 +
 [source,bash,options="nowrap"]
 ----
-$ mvn wildfly-swarm:run
+$ mvn thorntail:run
 ----
 
 [discrete]
@@ -68,9 +72,9 @@ $ mvn wildfly-swarm:run
 
 Accessing the `http://localhost:8080/rest/hello` URL in your browser should return the following message:
 
-[source]
+[source,subs="attributes+"]
 ----
-Hello from WildFly Swarm!
+Hello from {Thorntail}!
 ----
 
 After finishing the procedure, there should be a directory on your hard drive with the following contents:

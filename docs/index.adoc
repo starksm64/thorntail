@@ -6,8 +6,8 @@
 
 :ndash: &#x2013;
 
-= WildFly Swarm Documentation
-The WildFly Swarm Team
+= {Thorntail} Documentation
+The {Thorntail} Team
 v{version}
 
 include::introduction.adoc[]
@@ -36,11 +36,6 @@ include::howto/test-in-container/index.adoc[leveloffset=+2]
 
 include::howto/enabling-logging/index.adoc[leveloffset=+3]
 include::howto/logging-to-a-file/index.adoc[leveloffset=+3]
-
-
-ifdef::product[]
-include::howto/ejb-remote-security/index.adoc[leveloffset=+2]
-endif::[]
 
 
 ifndef::product[]

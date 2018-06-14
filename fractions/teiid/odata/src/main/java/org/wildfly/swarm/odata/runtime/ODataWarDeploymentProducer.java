@@ -22,6 +22,7 @@ import javax.inject.Inject;
 
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.wildfly.swarm.keycloak.Secured;
 import org.wildfly.swarm.odata.ODataFraction;
 import org.wildfly.swarm.spi.runtime.annotations.Post;
 import org.wildfly.swarm.undertow.WARArchive;
@@ -35,11 +36,14 @@ public class ODataWarDeploymentProducer {
 
     @Produces
     public Archive odataWar() throws Exception {
-        // TODO: Keycloak Integration for security (see Jolokia project)
         WARArchive war = ShrinkWrap.create(WARArchive.class, "odata.war")
                 .setContextRoot(this.fraction.getContext())
                 .setWebXML(this.getClass().getResource("/web.xml"));
         war.addModule("org.jboss.teiid.olingo");
+
+        if (this.fraction.isSecure()) {
+            war.as(Secured.class).protect().withRole(fraction.getRole());
+        }
         return war;
     }
 }

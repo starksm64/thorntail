@@ -16,12 +16,13 @@
     <maven.compiler.target>1.8</maven.compiler.target>
     <failOnMissingWebXml>false</failOnMissingWebXml>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <fabric8.generator.from>registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift:1.2</fabric8.generator.from>
   </properties>
 
   <dependencyManagement>
     <dependencies>
       <dependency>
-        <groupId>org.wildfly.swarm</groupId>
+        <groupId>io.thorntail</groupId>
         <artifactId>bom</artifactId>
         <version>${version.wildfly.swarm}</version>
         <scope>import</scope>
@@ -32,7 +33,7 @@
   <dependencies>
     <!-- Wildfly Swarm Fractions -->
     <dependency>
-      <groupId>org.wildfly.swarm</groupId>
+      <groupId>io.thorntail</groupId>
       <artifactId>jaxrs</artifactId>
     </dependency>
   </dependencies>
@@ -41,8 +42,8 @@
     <finalName>restful-endpoint</finalName>
     <plugins>
       <plugin>
-        <groupId>org.wildfly.swarm</groupId>
-        <artifactId>wildfly-swarm-plugin</artifactId>
+        <groupId>io.thorntail</groupId>
+        <artifactId>thorntail-maven-plugin</artifactId>
         <version>${version.wildfly.swarm}</version>
         <executions>
           <execution>

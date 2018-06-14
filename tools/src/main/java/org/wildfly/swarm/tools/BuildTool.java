@@ -349,7 +349,7 @@ public class BuildTool {
     }
 
     private static String strippedSwarmGav(MavenArtifactDescriptor desc) {
-        if (desc.groupId().equals(DependencyManager.WILDFLY_SWARM_GROUP_ID)) {
+        if (desc.groupId().equals(FractionDescriptor.THORNTAIL_GROUP_ID)) {
             return String.format("%s:%s", desc.artifactId(), desc.version());
         }
 
@@ -385,7 +385,7 @@ public class BuildTool {
         if (this.fractionDetectionMode != FractionDetectionMode.never) {
 
             if (this.fractionDetectionMode == FractionDetectionMode.force || artifact == null) {
-                this.log.info("Scanning for needed WildFly Swarm fractions with mode: " + this.fractionDetectionMode);
+                this.log.info("Scanning for needed Thorntail fractions with mode: " + this.fractionDetectionMode);
                 detectFractions();
             }
         }
@@ -399,7 +399,7 @@ public class BuildTool {
 
         if (this.fractionDetectionMode == FractionDetectionMode.never &&
                 artifact == null) {
-            this.log.error("No WildFly Swarm dependencies found and fraction detection disabled");
+            this.log.error("No Thorntail dependencies found and fraction detection disabled");
         }
 
         if (artifact != null) {
@@ -409,7 +409,7 @@ public class BuildTool {
             }
             expandArtifact(artifact.file);
         } else {
-            throw new IllegalStateException("No WildFly Swarm Bootstrap fraction found");
+            throw new IllegalStateException("No Thorntail Bootstrap fraction found");
         }
     }
 

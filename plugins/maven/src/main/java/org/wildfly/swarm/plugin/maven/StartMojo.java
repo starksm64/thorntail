@@ -92,9 +92,9 @@ public class StartMojo extends AbstractSwarmMojo {
 
         if (this.useUberJar) {
             executor = uberJarExecutor();
-        } else if (this.project.getPackaging().equals("war")) {
+        } else if (this.project.getPackaging().equals(WAR)) {
             executor = warExecutor();
-        } else if (this.project.getPackaging().equals("jar")) {
+        } else if (this.project.getPackaging().equals(JAR)) {
             executor = jarExecutor();
         } else {
             throw new MojoExecutionException("Unsupported packaging: " + this.project.getPackaging());
@@ -180,24 +180,24 @@ public class StartMojo extends AbstractSwarmMojo {
     }
 
     protected SwarmExecutor uberJarExecutor() throws MojoFailureException {
-        getLog().info("Starting -swarm.jar");
+        getLog().info("Starting uberjar");
 
         String finalName = this.project.getBuild().getFinalName();
 
-        if (finalName.endsWith(".war") || finalName.endsWith(".jar")) {
+        if (finalName.endsWith(WAR_FILE_EXTENSION) || finalName.endsWith(JAR_FILE_EXTENSION)) {
             finalName = finalName.substring(0, finalName.length() - 4);
         }
 
         return new SwarmExecutor()
-                .withExecutableJar(Paths.get(this.projectBuildDir, finalName + "-swarm.jar"));
+                .withExecutableJar(Paths.get(this.projectBuildDir, finalName + PackageMojo.UBERJAR_SUFFIX + JAR_FILE_EXTENSION));
     }
 
     protected SwarmExecutor warExecutor() throws MojoFailureException {
         getLog().info("Starting .war");
 
         String finalName = this.project.getBuild().getFinalName();
-        if (!finalName.endsWith(".war")) {
-            finalName = finalName + ".war";
+        if (!finalName.endsWith(WAR_FILE_EXTENSION)) {
+            finalName = finalName + WAR_FILE_EXTENSION;
         }
 
         Path warPath = Paths.get(this.projectBuildDir, finalName);
@@ -214,7 +214,7 @@ public class StartMojo extends AbstractSwarmMojo {
         final String finalName = this.project.getBuild().getFinalName();
 
         return executor(Paths.get(this.project.getBuild().getOutputDirectory()),
-                        finalName.endsWith(".jar") ? finalName : finalName + ".jar",
+                        finalName.endsWith(JAR_FILE_EXTENSION) ? finalName : finalName + JAR_FILE_EXTENSION,
                         true);
     }
 
@@ -239,7 +239,7 @@ public class StartMojo extends AbstractSwarmMojo {
     List<Path> findNeededFractions(final Set<Artifact> existingDeps,
                                    final Path source,
                                    final boolean scanDeps) throws MojoFailureException {
-        getLog().info("Scanning for needed WildFly Swarm fractions with mode: " + fractionDetectMode);
+        getLog().info("Scanning for needed Thorntail fractions with mode: " + fractionDetectMode);
 
         final Set<String> existingDepGASet = existingDeps.stream()
                 .map(d -> String.format("%s:%s", d.getGroupId(), d.getArtifactId()))
@@ -319,7 +319,7 @@ public class StartMojo extends AbstractSwarmMojo {
 
             declaredDependencies.add(DeclaredDependencies.createSpec(parentDep), DeclaredDependencies.createSpec(each.toString()));
 
-            if (each.getGroupId().equals(DependencyManager.WILDFLY_SWARM_GROUP_ID)
+            if (each.getGroupId().equals(FractionDescriptor.THORNTAIL_GROUP_ID)
                     && each.getArtifactId().equals(DependencyManager.WILDFLY_SWARM_BOOTSTRAP_ARTIFACT_ID)) {
                 hasSwarmDeps = true;
             }
@@ -366,7 +366,7 @@ public class StartMojo extends AbstractSwarmMojo {
                 }
             }
         } else if (!hasSwarmDeps) {
-            getLog().warn("No WildFly Swarm dependencies found and fraction detection disabled");
+            getLog().warn("No Thorntail dependencies found and fraction detection disabled");
         }
 
         return elements;
